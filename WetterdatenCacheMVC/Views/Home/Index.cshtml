@@ -1,0 +1,25 @@
+﻿@model IOrderedEnumerable<WeatherDataset>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Wetterdaten</h1>
+    <button type="button" class="btn btn-primary" style="margin-bottom: 10px;"><a asp-action="Update" style="color: white; text-decoration: none;">Update</a></button>
+    <table class="table table-striped">
+        <tr>
+            <th>Ort</th>
+            <th>Datum</th>
+            <th>Heruntergeladen</th>
+        </tr>
+        @foreach( var item in Model)
+        {
+            <tr>
+                <td>@item.Location</td>
+                <td>@item.Date @item.Time</td>
+                <td>@item.Timestamp</td>
+            </tr>
+        }
+    </table>   
+</div>
