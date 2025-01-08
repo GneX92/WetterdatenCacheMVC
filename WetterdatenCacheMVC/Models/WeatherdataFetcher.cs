@@ -2,6 +2,7 @@
 using System.Text.RegularExpressions;
 using System;
 using System.Text;
+using Microsoft.AspNetCore.Identity;
 
 namespace WetterdatenCacheMVC.Models;
 
@@ -97,7 +98,8 @@ public class WeatherdataFetcher
 
         Parallel.ForEach( filecontents , ( item , cancellationToken ) =>
         {
-            var regexOrt = new Regex( @"(?<=\b(Wetterberatung|Wetterberatungszentrale)\s)[\w-]+" );
+            var regexOrt = new Regex( @"(?<=\bfür\s)[\w-]+" );
+            //var regexOrt = new Regex( @"(?<=\bfür\s)([^,]+)" );
             var regexDate = new Regex( @"\b\d{2}\.\d{2}\.\d{4}\b" );
             var regexTime = new Regex( @"\b\d{2}:\d{2}\b" );
 
@@ -107,9 +109,17 @@ public class WeatherdataFetcher
 
             string time = DateTime.Now.ToString();
 
+            byte [] utf7Bytes = Encoding.UTF7.GetBytes( item );
+
+            // Convert byte array from UTF-7 to UTF-8
+            byte [] utf8Bytes = Encoding.Convert( Encoding.UTF7 , Encoding.UTF8 , utf7Bytes );
+
+            // Convert UTF-8 byte array back to string
+            string utf8String = Encoding.UTF8.GetString( utf8Bytes );
+
             if ( ortMatch.Success && dateMatch.Success && timeMatch.Success )
             {
-                WeatherDatasets.Add( new WeatherDataset() { Location = ortMatch.Value , Date = dateMatch.Value , Time = timeMatch.Value , Timestamp = time } );
+                WeatherDatasets.Add( new WeatherDataset() { Location = ortMatch.Value , Date = dateMatch.Value , Time = timeMatch.Value , Timestamp = time , Content = utf8String } );
             }
         } );
     }

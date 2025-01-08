@@ -7,19 +7,27 @@
 <div class="text-center">
     <h1 class="display-4">Wetterdaten</h1>
     <button type="button" class="btn btn-primary" style="margin-bottom: 10px;"><a asp-action="Update" style="color: white; text-decoration: none;">Update</a></button>
-    <table class="table table-striped">
+    <table class="table table-striped table-hover">
         <tr>
             <th>Ort</th>
             <th>Datum</th>
             <th>Heruntergeladen</th>
         </tr>
+        @{int index = 0;}
         @foreach( var item in Model)
         {
-            <tr>
+
+            <tr class="expandable">
                 <td>@item.Location</td>
                 <td>@item.Date @item.Time</td>
                 <td>@item.Timestamp</td>
             </tr>
+            <tr class="hidden_row">
+                <td colspan="3" class="hidden_cell">
+                    <div id="@index">@item.Content</div>
+                </td>
+            </tr>
+            index++;
         }
     </table>   
 </div>

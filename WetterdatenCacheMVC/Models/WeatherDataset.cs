@@ -9,4 +9,6 @@ public class WeatherDataset
     public string? Time { get; set; }
 
     public string? Timestamp { get; set; }
+
+    public string? Content { get; set; }
 }

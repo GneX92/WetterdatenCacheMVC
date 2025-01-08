@@ -1,4 +1,17 @@
-﻿// Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿function displayContent(index) {
+    $("#" + index).slideToggle("slow");
+}
 
-// Write your JavaScript code.
+$(".expandable").on("click",
+    function () {
+        var accordionRow = $(this).next(".hidden_row");
+        if (!accordionRow.is(":visible")) {
+            accordionRow.slideDown("fast").find(".hidden_cell").slideDown("fast");
+        } else {
+            accordionRow.find(".hidden_cell").slideUp("fast", function () {
+                if (!$(this).is(':visible')) {
+                    accordionRow.slideUp("fast");
+                }
+            });
+        }
+    });

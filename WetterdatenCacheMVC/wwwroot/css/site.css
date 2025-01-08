@@ -46,3 +46,21 @@ table {
     align-content: center;
     align-items: center;
 }
+
+.hidden_row {
+    display: none;
+    white-space: pre-line;
+}
+
+.hidden_cell {
+    padding: 0px;
+}
+
+.slide_div {
+    display: none;
+    white-space: pre-line;
+}
+
+.expandable {
+    cursor: pointer;
+}
